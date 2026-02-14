@@ -4,15 +4,15 @@ from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-# --- Groq Configuration ---
+# --- Gemini Configuration ---
 class GeminiSettings(BaseModel):
-    api_key: str = Field(default="", description="Groq API Key")
-    model: str = Field(default="gemini-2.5-flash", description="Groq Model to use")
+    api_key: str = Field(default="", description="Gemini API Key")
+    model: str = Field(default="gemini-2.5-flash", description="Gemini Model to use")
 
 
 # --- Settings Configuration ---
 class Settings(BaseSettings):
-    groq: GeminiSettings = Field(default_factory=GeminiSettings)
+    gemini: GeminiSettings = Field(default_factory=GeminiSettings)
 
     model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
         env_file=[".env"],
