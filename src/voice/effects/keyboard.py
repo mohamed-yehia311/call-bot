@@ -2,15 +2,18 @@ from .base import BaseVoiceEffect, AudioChunk
 from .utils.audio_loader import load_audio_chunks
 from typing import AsyncIterator, List
 import asyncio
+from pathlib import Path
 
+_EFFECTS_DIR = Path(__file__).parent
+_DEFAULT_KEYBOARD_SOUND = str(_EFFECTS_DIR / "sounds" / "keyboard.mp3")
 class KeyboardEffect(BaseVoiceEffect):
     "stream the keyboard sound for max_duration_s seconds"
 
-    def __init__(self, sound_path: str, max_duration_s: float = 3.0, target_rate: int = 16000, chunck_ms: int = 100 ):
+    def __init__(self, sound_path: str = _DEFAULT_KEYBOARD_SOUND, max_duration_s: float = 3.0, target_rate: int = 16000, chunck_ms: int = 100 ):
         self.sound_path = sound_path
-        self.max_druation_s = max_duration_s
+        self.max_duration_s = max_duration_s
         self.target_rate =  target_rate
-        self.chucks = load_audio_chunks(self.sound_path, target_rate=target_rate, chunk_ms=chunck_ms) 
+        self.chunks = load_audio_chunks(self.sound_path, target_rate=target_rate, chunk_ms=chunck_ms) 
 
 
     async def stream(self) -> AsyncIterator[AudioChunk]:
