@@ -1,6 +1,6 @@
 import numpy as np
 from pydub import AudioSegment
-
+from typing import Tuple, List
 AudioChunk = Tuple[int, np.ndarray]  # (sample_rate, samples)
 
 
