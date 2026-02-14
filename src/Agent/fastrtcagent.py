@@ -9,14 +9,14 @@ from langgraph.checkpoint.memory import InMemorySaver
 from loguru import logger
 
 from .tools.property_search import search_property_mock_tool
-from utils import model_has_tool_calls
-from config import settings
+from ..Agent.utils import model_has_tool_calls
+from ..Agent.config import settings
 from ..voice import get_sound_effect
 
 AudioChunk = Tuple[int, np.ndarray]  # (sample_rate, samples)
 
 DEFAULT_SYSTEM_PROMPT = """
-Your name is Lisa, and you work for The Neural Maze real estate company. 
+Your name is Lisa, and you work for The ELMasri real estate company. 
 Your task is to provide information about specific apartments using the `search_property_mock_tool`.
 Don't use asterisks or emojis, as you are engaged in a phone call. Just return short and informative responses.
 """.strip()
@@ -214,7 +214,17 @@ class FastRTCAgent:
         """
         msgs = model_step_data.get("messages", [])
         if isinstance(msgs, list) and len(msgs) > 0:
-            return getattr(msgs[0], "content", None)
+            content = getattr(msgs[0], "content", None)
+            if isinstance(content, list):
+                # Handle structured content (e.g. from Gemini)
+                text_parts = []
+                for part in content:
+                    if isinstance(part, str):
+                        text_parts.append(part)
+                    elif isinstance(part, dict) and "text" in part:
+                         text_parts.append(part["text"])
+                return " ".join(text_parts).strip()
+            return content
         return None
 
     async def _get_final_response(self) -> str:
