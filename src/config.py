@@ -17,6 +17,12 @@ class SuperlinkedSettings(BaseModel):
     price_min_value: int = Field(default=100000, description="Minimum value for appartment price in EGP")
     price_max_value: int = Field(default=10000000, description="Maximum value for appartment price in EGP")
 
+# --- Qdrunt configuration ---
+class QdrantSettings(BaseModel):
+    host: str = Field(default="qdrant", description="Qdrant Host")
+    port: int = Field(default=6333, description="Qdrant Port")
+    api_key: str = Field(default="", description="Qdrant API Key")
+    use_https: bool = Field(default=False, description="Use HTTPS for Qdrant")
 
 
 # --- Settings Configuration ---
@@ -24,8 +30,8 @@ class Settings(BaseSettings):
     gemini: GeminiSettings = Field(default_factory=GeminiSettings)
 
     superlinked: SuperlinkedSettings = Field(default_factory=SuperlinkedSettings)
-
     
+    qdrant: QdrantSettings = Field(default_factory=QdrantSettings)
 
     model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
         env_file=[".env"],
