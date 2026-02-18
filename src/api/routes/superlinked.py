@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Request, status
 from loguru import logger
 
 # Using the updated model names from our previous step
-from ..models import PropertyDataIngestion, PropertyDiscoveryQuery
+from ...models import PropertyDataIngestion, PropertyDiscoveryQuery
 
 # Updated prefix and tags for a unique API signature
 router = APIRouter(prefix="/discovery", tags=["Search Engine"])
