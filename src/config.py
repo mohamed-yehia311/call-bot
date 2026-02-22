@@ -4,6 +4,11 @@ from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+class GroqSettings(BaseModel):
+    api_key: str = Field(default="", description="Groq API Key")
+    base_url: str = Field(default="https://api.groq.com/openai/v1", description="Groq API Base URL")
+    stt_model: str = Field(default="whisper-large-v3", description="Groq Whisper model to use for STT")
+
 # --- Gemini Configuration ---
 class GeminiSettings(BaseModel):
     api_key: str = Field(default="", description="Gemini API Key")
@@ -32,6 +37,8 @@ class Settings(BaseSettings):
     superlinked: SuperlinkedSettings = Field(default_factory=SuperlinkedSettings)
     
     qdrant: QdrantSettings = Field(default_factory=QdrantSettings)
+
+    groq: GroqSettings = Field(default_factory=GroqSettings)
 
     model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
         env_file=[".env"],
