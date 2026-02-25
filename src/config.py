@@ -40,6 +40,10 @@ class Settings(BaseSettings):
 
     groq: GroqSettings = Field(default_factory=GroqSettings)
 
+    stt_model: str = Field(default="faster-whisper", description="Family of STT models to use")
+
+    tts_model: str = Field(default="orpheus-runpod", description="Family of TTS models to use")
+
     model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
         env_file=[".env"],
         env_file_encoding="utf-8",
