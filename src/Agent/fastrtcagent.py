@@ -2,7 +2,9 @@ import asyncio
 from typing import AsyncIterator, List, Optional, Tuple
 
 import numpy as np
-from fastrtc import ReplyOnPause, Stream, get_stt_model, get_tts_model
+from fastrtc import ReplyOnPause, Stream
+from ..stt.utils import get_stt_model
+from ..tts.utils import get_tts_model
 from langchain.agents import create_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.checkpoint.memory import InMemorySaver
@@ -55,8 +57,8 @@ class FastRTCAgent:
             tools: List of tools for the agent (defaults to property search tool)
         """
 
-        self._stt_model = stt_model or get_stt_model()
-        self._tts_model = tts_model or get_tts_model()
+        self._stt_model = stt_model or get_stt_model(settings.stt_model)
+        self._tts_model = tts_model or get_tts_model(settings.tts_model)
         self._voice_effect = voice_effect or get_sound_effect()
 
         self._react_agent = self._create_react_agent(
