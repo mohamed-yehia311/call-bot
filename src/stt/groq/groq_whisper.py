@@ -1,5 +1,5 @@
 from openai import OpenAI, OpenAIError
-from .base import STTModel
+from ..base import STTModel
 from ...config import settings
 from fastrtc import audio_to_bytes
 
