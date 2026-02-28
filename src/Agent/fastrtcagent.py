@@ -9,26 +9,13 @@ from langchain.agents import create_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.checkpoint.memory import InMemorySaver
 from loguru import logger
-
+from .stream import VoiceAgentStream
 from .tools.property_search import get_search_service
 from ..Agent.utils import model_has_tool_calls
 from ..config import settings
 from ..voice import get_sound_effect
-
+from ..avatars.registery import get_avatar
 AudioChunk = Tuple[int, np.ndarray]  # (sample_rate, samples)
-
-DEFAULT_SYSTEM_PROMPT = """
-Your name is Mai, and you work for The ELMasri real estate company. 
-Your task is to provide information about specific apartments using the `get_search_service`.
-Don't use asterisks or emojis, as you are engaged in a phone call. Just return short and informative responses.
-The information you provide to the user should be concrete, summarised and easy to understand. 
-
-This are some examples of good responses:
-
-- "I found one apartment in that area. It features 3 rooms, 2 bathrooms, and a beautifully designed living room!"
-- "I have two appartments for you. The first one is a 3 bedroom, 2 bathroom apartment in the center of the city. The second one is a 2 bedroom, 1 bathroom
- apartment in the suburbs. The first one is 1000 square feet and the second one is 800 square feet."
-""".strip()
 
 
 class FastRTCAgent:
@@ -41,7 +28,7 @@ class FastRTCAgent:
         voice_effect=None,
         thread_id: str = "default",
         fallback_message: str = "I'm sorry, I couldn't find anything useful in the system.",
-        system_prompt: str | None = None,
+        avatar: str | None = "Mai",
         tools: List | None = None,
     ):
         """
@@ -53,7 +40,7 @@ class FastRTCAgent:
             voice_effect: Voice effect instance (defaults to get_sound_effect())
             thread_id: Thread ID for agent conversation tracking
             fallback_message: Message to return when no answer is found
-            system_prompt: Custom system prompt for the agent
+            avatar: Avatar for the agent
             tools: List of tools for the agent (defaults to property search tool)
         """
 
@@ -62,7 +49,7 @@ class FastRTCAgent:
         self._voice_effect = voice_effect or get_sound_effect()
 
         self._react_agent = self._create_react_agent(
-            system_prompt=system_prompt,
+            system_prompt=self._avatar.get_system_prompt(),
             tools=tools,
         )
 
@@ -71,7 +58,7 @@ class FastRTCAgent:
         self._fallback_message = fallback_message
         self._tool_use_message = tool_use_message
         self._sound_effect_seconds = sound_effect_seconds
-
+        self._avatar = get_avatar(avatar)
         self._stream = self._build_stream()
 
     def _create_react_agent(
@@ -94,7 +81,6 @@ class FastRTCAgent:
             api_key=settings.gemini.api_key,
         )
 
-        system_prompt = system_prompt or DEFAULT_SYSTEM_PROMPT
         tools = tools or [get_search_service]
 
         agent = create_agent(
@@ -116,7 +102,7 @@ class FastRTCAgent:
             async for chunk in self._process_audio(audio):
                 yield chunk
 
-        return Stream(
+        return VoiceAgentStream(
             handler=ReplyOnPause(handler_wrapper),
             modality="audio",
             mode="send-receive",
