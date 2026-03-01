@@ -24,3 +24,14 @@ class PropertyDiscoveryQuery(BaseModel):
         le=20, 
         description="The upper limit of relevant property matches to return."
     )
+
+
+class CallRequest(BaseModel):
+    """Request model for initiating a Twilio phone call."""
+
+    from_number: str = Field(..., alias="from", description="Phone number to call from")
+    to_number: str = Field(..., alias="to", description="Phone number to call to")
+    voice_agent_url: str = Field(..., description="URL of the voice agent to connect to")
+
+    class Config:
+        populate_by_name = True
