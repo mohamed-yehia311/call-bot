@@ -1,9 +1,41 @@
 from uuid import uuid4
 
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter, HTTPException
+from twilio.rest import Client
 
 from ...Agent.fastrtcagent import FastRTCAgent
+from ..models import CallRequest
+from ...config import settings
 
+router = APIRouter(prefix="/call", tags=["voice"])
+
+
+@router.post("")
+async def start_call(call_request: CallRequest):
+    """
+    Initiates a Twilio phone call to connect to the AI voice agent.
+
+    Args:
+        call_request: Call request containing from and to phone numbers
+
+    Returns:
+        Dictionary containing the Twilio call SID
+    """
+    try:
+        client = Client(
+            settings.twilio.account_sid,
+            settings.twilio.auth_token,
+        )
+
+        call = client.calls.create(
+            to=call_request.to_number,
+            from_=call_request.from_number,
+            url=f"{call_request.voice_agent_url}/voice/telephone/incoming",
+        )
+
+        return {"sid": call.sid}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to initiate call: {str(e)}")
 
 def mount_voice_stream(app: FastAPI):
     """
