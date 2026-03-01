@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 # Importing our renamed engine accessor and modified routes
 from ..infrastructure.superlinked.service import get_search_service
-from .routes import health, superlinked
+from .routes import health, superlinked, voice
 from .routes.voice import mount_voice_stream
 
 @asynccontextmanager
@@ -46,6 +46,7 @@ def create_application() -> FastAPI:
     # Registering endpoint modules
     fastapi_app.include_router(health.router)
     fastapi_app.include_router(superlinked.router)
+    fastapi_app.include_router(voice.router)
 
     # Integrate the WebRTC/Twilio voice streaming layer
     mount_voice_stream(fastapi_app)
