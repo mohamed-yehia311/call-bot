@@ -108,7 +108,7 @@ class Avatar(BaseModel):
         )
     
     @classmethod
-    def from_yaml(cls, yaml_path: Path) -> "ArabianPersona":
+    def from_yaml(cls, yaml_path: Path):
         """
         Load a persona from a YAML file.
         
@@ -116,7 +116,7 @@ class Avatar(BaseModel):
             yaml_path: Path to the YAML file
             
         Returns:
-            ArabianPersona instance
+            Persona instance
             
         Raises:
             FileNotFoundError: If the YAML file doesn't exist
