@@ -138,6 +138,7 @@ def get_property_search_service(
             qdrant_host=qdrant_host,
             qdrant_port=qdrant_port,
             qdrant_api_key=qdrant_api_key,
-            qdrant_use_https=qdrant_use_https,
+            qdrant_cluster_url=qdrant_cluster_url,
+            qdrant_use_cloud=qdrant_use_cloud
         )
     return _property_service
