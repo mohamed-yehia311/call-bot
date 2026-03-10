@@ -8,7 +8,7 @@ def get_stt_model(model: str) -> STTModel:
         return MoonshineSTT()
     elif model == "groq":
         return GroqWhisperSTT()
-    elif model == "faster-whisper":
-        return FasterWhisperSTT()
+    # elif model == "faster-whisper":
+    #     return FasterWhisperSTT()
     else:
         raise ValueError(f"Invalid model: {model}")
