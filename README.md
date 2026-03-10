@@ -201,7 +201,6 @@ Configuration is managed through `src/config.py` and environment variables. Key 
 ### STT/TTS Settings
 - **Groq Whisper**: Fast cloud-based speech recognition
 - **Local Moonshine**: On-device STT (privacy-focused)
-- **RunPod**: GPU-accelerated inference for faster processing
 
 ### Vector Search
 - **Superlinked**: Intelligent semantic indexing and retrieval
