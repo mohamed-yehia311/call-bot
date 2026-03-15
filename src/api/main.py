@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # Importing our renamed engine accessor and modified routes
-from ..infrastructure.superlinked.service import get_search_service
+from ..infrastructure.superlinked.service import get_property_search_service
 from .routes import health, superlinked, voice
 from .routes.voice import mount_voice_stream
 
@@ -16,7 +16,7 @@ async def app_lifecycle(app: FastAPI):
     and resource cleanup during the app's runtime.
     """
     # Bootstrapping the vector search engine into the application state
-    app.state.property_service = get_search_service()
+    app.state.property_service = get_property_search_service()
     
     yield
     

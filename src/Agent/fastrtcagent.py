@@ -10,7 +10,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.checkpoint.memory import InMemorySaver
 from loguru import logger
 from .stream import VoiceAgentStream
-from .tools.property_search import get_search_service
+from .tools.property_search import get_property_search_service
 from ..Agent.utils import model_has_tool_calls
 from ..config import settings
 from ..voice import get_sound_effect

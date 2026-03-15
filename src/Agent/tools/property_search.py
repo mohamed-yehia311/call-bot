@@ -1,7 +1,7 @@
 import json
 from langchain.tools import tool
 from loguru import logger
-from ...infrastructure.superlinked.service import get_search_service
+from ...infrastructure.superlinked.service import get_property_search_service
 
 @tool
 async def lookup_listings_tool(user_description: str, max_results: int = 3) -> str:
