@@ -128,8 +128,8 @@ def get_property_search_service(
     qdrant_host: str | None = settings.qdrant.host,
     qdrant_port: int | None = settings.qdrant.port,
     qdrant_api_key: str | None = settings.qdrant.api_key,
-    qdrant_cluster_url: str | None = settings.qdrant_cluster_url,
-    qdrant_use_cloud: bool | None = settings.qdrant.use_cloud,
+    qdrant_cluster_url: str | None = settings.qdrant.cluster_url,
+    qdrant_use_cloud: bool | None = settings.qdrant.use_qdrant_cloud,
 ) -> PropertySearchService:
     """Get or create the global property search service instance."""
     global _property_service
