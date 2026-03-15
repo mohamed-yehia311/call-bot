@@ -1,4 +1,7 @@
-from .models import FasterWhisperSTT, GroqWhisperSTT, MoonshineSTT, STTModel
+from src.stt.local import MoonshineSTT
+from src.stt.groq import GroqWhisperSTT
+from src.stt.base import STTModel
+
 
 
 

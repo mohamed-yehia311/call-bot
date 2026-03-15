@@ -1,0 +1,1 @@
+from src.stt.local.moonshine import MoonshineSTT

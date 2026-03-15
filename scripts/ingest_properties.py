@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 from loguru import logger
-from ..src.infrastructure.superlinked.service import (
+from src.infrastructure.superlinked.service import (
     get_property_search_service,
 )
 

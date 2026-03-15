@@ -20,7 +20,7 @@ class GeminiSettings(BaseModel):
 
 # --- Superlinked configuration ---
 class SuperlinkedSettings(BaseModel):
-    embedding_model: str = Field(default="entence-transformers/all-MiniLM-L6-v2", description="Embedding model used by superlinked") 
+    embedding_model: str = Field(default="sentence-transformers/all-MiniLM-L6-v2", description="Embedding model used by superlinked") 
     sqm_min_value : int = Field(default=20, description="Minimum value for appartment size in square meter")
     sqm_max_value : int = Field(default=2000, description="Maximum value for appartment size in square meter")
     price_min_value: int = Field(default=100000, description="Minimum value for appartment price in EGP")

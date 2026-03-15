@@ -1,7 +1,5 @@
-from ..tts.base import TTSModel
-from ..tts.local.Kokoro import KokoroTTSModel
-from ..tts.runpod.orphus.model import OrpheusTTSModel
-from ..tts.togetherai.model import TogetherTTSModel
+from src.tts.base import TTSModel
+from src.tts.local import KokoroTTSModel
 from loguru import logger
 
 def get_tts_model(model_name: str) -> TTSModel:
