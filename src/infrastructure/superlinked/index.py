@@ -21,7 +21,7 @@ description_space = sl.TextSimilaritySpace(
 )
 
 size_space = sl.NumberSpace(
-    number=property_schema.sqft,
+    number=property_schema.sqm,
     min_value=settings.superlinked.sqm_min_value,
     max_value=settings.superlinked.sqm_max_value,
     mode=sl.Mode.MAXIMUM
