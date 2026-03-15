@@ -17,6 +17,7 @@ class GroqSettings(BaseModel):
 class GeminiSettings(BaseModel):
     api_key: str = Field(default="", description="Gemini API Key")
     model: str = Field(default="gemini-2.5-flash", description="Gemini Model to use")
+    base_url: str = Field(default="https://generativelanguage.googleapis.com/v1beta/openai/", description="Gemini Base URL")
 
 # --- Superlinked configuration ---
 class SuperlinkedSettings(BaseModel):
