@@ -90,6 +90,9 @@ class PropertySearchService:
         logger.info(f"Ingesting properties from {properties_data_path} ...")
         df = pd.read_csv(properties_data_path)
         
+        # Rename 'sqft' from the CSV to 'sqm' as expected by the schema
+        df = df.rename(columns={"sqft": "sqm"})
+        
         self.source.put([df])
         logger.info(f"Ingested {len(df)} properties")
 
