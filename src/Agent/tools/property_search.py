@@ -25,12 +25,12 @@ async def lookup_listings_tool(user_description: str, max_results: int = 3) -> s
     """
     try:
         # Utilizing the renamed singleton accessor
-        search_engine = get_search_service()
+        search_engine = get_property_search_service()
         
         # Calling the updated async search method
-        results = await search_engine.execute_search(
-            text_input=user_description, 
-            top_k=max_results
+        results = await search_engine.search_properties(
+            query=user_description, 
+            limit=max_results
         )
 
         if not results:
