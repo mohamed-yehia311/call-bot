@@ -9,8 +9,12 @@ class KokoroTTSModel(TTSModel):
     def __init__(self):
         self.model = get_tts_model()
 
-    def tts(self, text: str) -> bytes:
+    @property
+    def sample_rate(self) -> int:
+        return getattr(self.model, "sample_rate", 24000)
+
+    def tts(self, text: str, **kwargs):
         return self.model.tts(text)
 
-    def stream_tts(self, text: str):
+    def stream_tts(self, text: str, **kwargs):
         return self.model.stream_tts(text)
