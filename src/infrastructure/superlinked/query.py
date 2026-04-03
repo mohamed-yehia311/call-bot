@@ -11,9 +11,10 @@ from ...infrastructure.superlinked.index import (
 )
 
 # Initialize LLM configuration for natural language processing
-llm_query_config = sl.GeminiClientConfig(
+llm_query_config = sl.OpenAIClientConfig(
     api_key=settings.gemini.api_key, 
-    model=settings.gemini.model
+    model=settings.gemini.model,
+    base_url=settings.gemini.base_url
 )
 
 # Define the property search logic with dynamic parameters
@@ -38,7 +39,7 @@ property_search_query = (
     .filter(property_schema.location == sl.Param("area_filter", options=NEIGHBORHOODS))
     .filter(property_schema.rooms >= sl.Param("min_room_count"))
     .filter(property_schema.baths >= sl.Param("min_bathroom_count"))
-    .filter(property_schema.sqft >= sl.Param("min_square_footage"))
+    .filter(property_schema.sqm >= sl.Param("min_square_footage"))
     .filter(property_schema.price <= sl.Param("max_budget"))
     .limit(sl.Param("result_limit"))
     .select_all()
