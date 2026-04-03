@@ -10,7 +10,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.checkpoint.memory import InMemorySaver
 from loguru import logger
 from .stream import VoiceAgentStream
-from .tools.property_search import get_property_search_service
+from .tools.property_search import lookup_listings_tool
 from ..Agent.utils import model_has_tool_calls
 from ..config import settings
 from ..voice import get_sound_effect
@@ -47,6 +47,7 @@ class FastRTCAgent:
         self._stt_model = stt_model or get_stt_model(settings.stt_model)
         self._tts_model = tts_model or get_tts_model(settings.tts_model)
         self._voice_effect = voice_effect or get_sound_effect()
+        self._avatar = get_avatar(avatar)
 
         self._react_agent = self._create_react_agent(
             system_prompt=self._avatar.get_system_prompt(),
@@ -58,7 +59,6 @@ class FastRTCAgent:
         self._fallback_message = fallback_message
         self._tool_use_message = tool_use_message
         self._sound_effect_seconds = sound_effect_seconds
-        self._avatar = get_avatar(avatar)
         self._stream = self._build_stream()
 
     def _create_react_agent(
@@ -81,7 +81,7 @@ class FastRTCAgent:
             api_key=settings.gemini.api_key,
         )
 
-        tools = tools or [get_search_service]
+        tools = tools or [lookup_listings_tool]
 
         agent = create_agent(
             llm,
