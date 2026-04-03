@@ -7,6 +7,7 @@ from ..stt.utils import get_stt_model
 from ..tts.utils import get_tts_model
 from langchain.agents import create_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langgraph.checkpoint.memory import InMemorySaver
 from loguru import logger
 from .stream import VoiceAgentStream
@@ -76,10 +77,16 @@ class FastRTCAgent:
         Returns:
             Configured LangChain agent
         """
-        llm = ChatGoogleGenerativeAI(
-            model=settings.gemini.model,
-            api_key=settings.gemini.api_key,
-        )
+        if settings.llm_provider.lower() == "groq":
+            llm = ChatGroq(
+                model_name=settings.groq.model,
+                api_key=settings.groq.api_key,
+            )
+        else:
+            llm = ChatGoogleGenerativeAI(
+                model=settings.gemini.model,
+                api_key=settings.gemini.api_key,
+            )
 
         tools = tools or [lookup_listings_tool]
 

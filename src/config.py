@@ -63,6 +63,7 @@ class Settings(BaseSettings):
 
     tts_model: str = Field(default="orpheus-runpod", description="Family of TTS models to use")
 
+    llm_provider: str = Field(default="gemini", description="LLM provider to use (e.g., gemini, groq)")
 
     opik: OpikSettings = Field(default_factory=OpikSettings)
 
