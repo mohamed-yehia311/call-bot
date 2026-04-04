@@ -78,27 +78,18 @@ def main():
     stt_choices = [
         ("Moonshine - Local lightweight Whisper alternative (default)", "moonshine"),
         ("Whisper Groq - Fast cloud-based Whisper via Groq API", "groq"),
-        ("Faster Whisper - Optimized Whisper via RunPod deployment", "faster-whisper"),
     ]
     
     tts_choices = [
         ("Kokoro - Local high-quality TTS via FastRTC (default)", "kokoro"),
-        ("Together AI - Together AI API", "together"),
-        ("Orpheus RunPod - Orpheus TTS via RunPod deployment", "orpheus-runpod"),
     ]
     
     avatar_choices = [
-        ("Leo", "leo"),
-        ("Zac", "zac"),
-        ("Dan", "dan"),
-        ("Jess", "jess"),
-        ("Tara (default)", "tara"),
-        ("Zoe", "zoe"),
-        ("Mia", "mia"),
-        ("Leah", "leah"),
         ("Mai", "Mai"),
+        ("Khaled", "Khaled"),
         ("Layla", "Layla"),
-        ("Mohamed", "Mohamed")
+        ("Mohamed", "Mohamed"),
+        ("Noor", "Noor"),
     ]
     
     # Create interactive questions
