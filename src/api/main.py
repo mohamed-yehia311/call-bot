@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 # Importing our renamed engine accessor and modified routes
 from ..infrastructure.superlinked.service import get_property_search_service
-from .routes import superlinked, voice
+from .routes import superlinked, voice, health
 from .routes.voice import mount_voice_stream
 
 @asynccontextmanager
@@ -44,6 +44,7 @@ def create_application() -> FastAPI:
     )
 
     # Registering endpoint modules
+    fastapi_app.include_router(health.router)
     fastapi_app.include_router(superlinked.router)
     fastapi_app.include_router(voice.router)
 
